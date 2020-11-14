@@ -2,5 +2,11 @@
     "name": "root/www",
     "require": {
         "rct567/dom-query": "^0.8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Classes\\": "classes/",
+            "Parses\\": "parses/"
+        }
     }
 }
