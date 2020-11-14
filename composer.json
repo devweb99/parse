@@ -1,4 +1,6 @@
 {
     "name": "root/www",
-    "require": {}
+    "require": {
+        "rct567/dom-query": "^0.8.0"
+    }
 }

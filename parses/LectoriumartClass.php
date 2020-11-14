@@ -1,12 +1,11 @@
 <?php
 
 class LectoriumartClass {
-    private $id;
-    private $uri;
+    private $uri = [];
     
     public function __construct () {}
 
-    public function getPreview ()
+    public function getPreviews ()
     {
 
     }
