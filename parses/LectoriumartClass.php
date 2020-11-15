@@ -8,9 +8,11 @@ class LectoriumartClass {
     private $base = 'http://lectoriumart.ru';
     private $dom;
     private $taskList = [];
+    public $file;
 
     public function __construct (string $uri = '') {
         $this->dom = new DomQuery(file_get_contents($this->base . $uri)); 
+        $this->file = preg_replace('#((http|https):\/\/)|(\.(ru|com|рф|online|org))#', '', $this->base);
 
         $this->getTaskList();
     }
@@ -26,12 +28,12 @@ class LectoriumartClass {
 
     public function getInfo ()
     {
-        $result = [];
+        $info = [];
 
         foreach ($this->taskList as $task) {
             $dom = new DomQuery(file_get_contents($task));
             
-            $result[] = [
+            $info[] = [
                 'link' => $task,
                 'title' => trim($dom->find('.container article div.h3')->text()) ?? false,
                 'when' => trim($dom->find('.container article .col-xl-4 .mb-1')->text()) ?? false,
@@ -43,10 +45,7 @@ class LectoriumartClass {
             ];
         }
 
-        return [
-            'file' => preg_replace('#((http|https):\/\/)|(\.(ru|com|рф|online|org))#g', '', $this->base),
-            'content' => $result
-        ];
+        return $info;
     }
 }
 
