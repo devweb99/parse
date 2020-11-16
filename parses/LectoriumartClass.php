@@ -10,14 +10,14 @@ class LectoriumartClass {
     private $taskList = [];
     public $file;
 
-    public function __construct (string $uri = '') {
+    public function __construct(string $uri = '') {
         $this->dom = new DomQuery(file_get_contents($this->base . $uri)); 
         $this->file = preg_replace('#((http|https):\/\/)|(\.(ru|com|СЂС„|online|org))#', '', $this->base);
 
         $this->getTaskList();
     }
 
-    private function getTaskList ()
+    private function getTaskList()
     {
         $this->dom->find('.products.columns-1 > li.product_cat-vne-raspisaniya')->remove();
 
@@ -26,7 +26,7 @@ class LectoriumartClass {
         }
     }
 
-    public function getInfo ()
+    public function getInfo()
     {
         $info = [];
 
@@ -46,6 +46,24 @@ class LectoriumartClass {
         }
 
         return $info;
+    }
+
+    public function getTemplates(array $tasks)
+    {                                                                                                                      
+        $templates = [];                                                                                                   
+                                                                                      
+        foreach ($tasks as $task) {                                                                                                                      
+            $templates[] = "                                                                                                                         
+                Новая тема \n
+                {$task['title']} [ {$task['author']} ] \n                                                                                         
+                {$task['discraption']} \n                                                                                                         
+                {$task['author']} \n                                                                                                                 
+                {$task['when']} \n                                                                                                                   
+                {$task['link']}  
+            ";                                                                                                                                       
+        }
+    
+        return $templates;                                                                                                                               
     }
 }
 
