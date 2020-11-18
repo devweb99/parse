@@ -51,7 +51,7 @@ class LabkovskiyClass {
                 
             $info[] = [
                 'link' => $task,
-                'title' => trim($dom->find('.eventorganiser-event-meta > h4')->text()) ?? false,
+		        'title' => preg_replace(['#«#','#»#','#\:#','#\.#','#\.\.#','#\.\.\.#','#\,#','#…#'], '', trim($dom->find('.title-headings > h1')->text())) ?? false,
                 'time' => $dom->find('.eo-event-meta li > strong')->remove() . trim($dom->find('.eo-event-meta')->text()) ?? false,
                 'author' => 'Михаил Лабковский',
                 'description' => $dom->find('.entry-content center, .entry-content .eo-event-meta')->remove() . strstr(preg_replace('#\n\n#', '', trim($dom->find('.entry-content')->text())), 'Внимание!', true)
