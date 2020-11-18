@@ -20,6 +20,17 @@ class ParserClass {
     {
         $this->current = $this->parse->getInfo();
 
+	// emulation new post
+	/*$this->current[] = [
+                'link' => 'http://yandex.ru',
+                'title' => 'test' ?? false,
+                'when' => 'test' ?? false,
+                'where' => 'test' ?? false,
+                'time' => 'test' ?? false,
+                'author' => 'test' ?? false,
+                'discraption' => 'test' ?? false
+	];*/
+
         if (!file_exists($this->file)) {
             $this->messages = $this->current;
         } else {
@@ -36,11 +47,15 @@ class ParserClass {
         $tasks = $this->getAndCheckNewMessage();
 
         if (count($tasks) > 0) {
-            $messages = $this->parse->getTemplates($tasks);
+            $header = $this->parse->getTemplateHead($tasks);
+            $body = $this->parse->getTemplateBody($tasks);
 
-            foreach ($messages as $message) {
-                $this->driver->sendMessage(['chat_id' => TELEGRAM_CHAT_ID, 'text' => mb_convert_encoding($message, 'utf-8', mb_detect_encoding($message))]);
-            }
+	    if (count($header) == count($body)) {
+	    	for ($i = 0; $i < count($header); $i++) {
+			$this->driver->sendMessage(['chat_id' => TELEGRAM_CHAT_ID, 'text' => mb_convert_encoding($header[$i], 'utf-8', mb_detect_encoding($header[$i])), 'parse_mode' => 'html']);
+			$this->driver->sendMessage(['chat_id' => TELEGRAM_CHAT_ID, 'text' => mb_convert_encoding($body[$i], 'utf-8', mb_detect_encoding($body[$i]))]);
+		}
+	    }
         }
     }
 

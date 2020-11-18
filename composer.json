@@ -2,7 +2,8 @@
     "name": "root/www",
     "require": {
         "rct567/dom-query": "^0.8.0",
-        "irazasyed/telegram-bot-sdk": "^3.3"
+        "irazasyed/telegram-bot-sdk": "^3.3",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "autoload": {
         "psr-4": {
